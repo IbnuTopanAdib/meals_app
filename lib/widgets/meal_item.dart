@@ -6,7 +6,9 @@ import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
-  const MealItem({super.key, required this.meal});
+  final void Function() selectDetailMeal;
+  const MealItem(
+      {super.key, required this.meal, required this.selectDetailMeal});
 
   String get affordability {
     return meal.affordability.name[0].toUpperCase() +
@@ -26,13 +28,7 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => MealDetailScreen(meal: meal),
-            ),
-          );
-        },
+        onTap: selectDetailMeal,
         child: Stack(
           children: [
             FadeInImage(
