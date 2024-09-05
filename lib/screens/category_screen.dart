@@ -6,10 +6,8 @@ import 'package:meals_app/screens/meals_screen.dart';
 import 'package:meals_app/widgets/category_item.dart';
 
 class CategoryScreen extends StatelessWidget {
-   final void Function(Meal meal) toggleMealFavorite;
+  final void Function(Meal meal) toggleMealFavorite;
   const CategoryScreen({super.key, required this.toggleMealFavorite});
-
-
 
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals.where((meal) {
@@ -17,36 +15,35 @@ class CategoryScreen extends StatelessWidget {
     }).toList();
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) =>
-            MealsScreen(title: category.title, meals: filteredMeals, toggleMealFavorite: toggleMealFavorite,),
+        builder: (context) => MealsScreen(
+          title: category.title,
+          meals: filteredMeals,
+          toggleMealFavorite: toggleMealFavorite,
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Pilih Kategori Makanan'),
-        ),
-        body: GridView.builder(
-          padding: const EdgeInsets.all(16.0),
-          itemCount: availableCategories.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            childAspectRatio: 3 / 2,
-          ),
-          itemBuilder: (context, index) {
-            final category = availableCategories[index];
-            return CategoryItem(
-              category: category,
-              selectCategory: () {
-                _selectCategory(context, category);
-              },
-            );
+    return GridView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemCount: availableCategories.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 20,
+        childAspectRatio: 3 / 2,
+      ),
+      itemBuilder: (context, index) {
+        final category = availableCategories[index];
+        return CategoryItem(
+          category: category,
+          selectCategory: () {
+            _selectCategory(context, category);
           },
-        ));
+        );
+      },
+    );
   }
 }

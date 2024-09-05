@@ -4,12 +4,12 @@ import 'package:meals_app/screens/meal_detail_screen.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  final String title;
+  final String? title;
   final List<Meal> meals;
   final void Function(Meal meal) toggleMealFavorite;
   const MealsScreen(
       {super.key,
-      required this.title,
+      this.title,
       required this.meals,
       required this.toggleMealFavorite});
 
@@ -64,10 +64,12 @@ class MealsScreen extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: content);
+    return title == null
+        ? content
+        : Scaffold(
+            appBar: AppBar(
+              title: Text(title ?? "Meals"),
+            ),
+            body: content);
   }
 }

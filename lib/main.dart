@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meals_app/screens/category_screen.dart';
+
 import 'package:meals_app/screens/main_screen.dart';
 
 final theme = ThemeData(

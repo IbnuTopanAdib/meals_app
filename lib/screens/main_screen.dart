@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/category_screen.dart';
 import 'package:meals_app/screens/meals_screen.dart';
+import 'package:meals_app/widgets/main_drawer.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,6 +13,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+  String title = 'Food Category';
   final List<Meal> _favoriteMeals = [];
 
   void _selectPage(int index) {
@@ -33,12 +35,12 @@ class _MainScreenState extends State<MainScreen> {
       setState(() {
         _favoriteMeals.remove(meal);
       });
-      _showSnackbar('Add to favorites');
+      _showSnackbar('Remove from favorites');
     } else {
       setState(() {
         _favoriteMeals.add(meal);
       });
-      _showSnackbar('Remove from favorites');
+      _showSnackbar('Add to favorites');
     }
   }
 
@@ -49,12 +51,16 @@ class _MainScreenState extends State<MainScreen> {
     );
     if (_selectedIndex == 1) {
       activeScreen = MealsScreen(
-        title: 'FavoriteScreen',
         meals: _favoriteMeals,
         toggleMealFavorite: _toggleMealFavorite,
       );
+      title = 'Favorite Food';
     }
     return Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        drawer: MainDrawer(),
         body: activeScreen,
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.orange,
