@@ -28,6 +28,13 @@ class _MainScreenState extends State<MainScreen> {
         .showSnackBar(SnackBar(content: Text(message)));
   }
 
+  void _setSelectScreen(String identifier) {
+    if (identifier == 'filters') {
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
   void _toggleMealFavorite(Meal meal) {
     bool isInFavorite = _favoriteMeals.contains(meal);
 
@@ -60,7 +67,7 @@ class _MainScreenState extends State<MainScreen> {
         appBar: AppBar(
           title: Text(title),
         ),
-        drawer: MainDrawer(),
+        drawer: MainDrawer(selectScreen: _setSelectScreen),
         body: activeScreen,
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.orange,
