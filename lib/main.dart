@@ -23,6 +23,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: theme, home: const MainScreen());
+    return MaterialApp(
+      theme: theme,
+      home: const MainScreen(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
