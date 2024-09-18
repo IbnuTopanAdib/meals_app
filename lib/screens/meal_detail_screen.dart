@@ -10,34 +10,52 @@ class MealDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteMeals = ref.watch(favoriteMealsProvider);
+    final isFavorite = favoriteMeals.contains(meal);
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [
           IconButton(
-              onPressed: () {
-                final wasAdded = ref
-                    .read(favoriteMealsProvider.notifier)
-                    .toggleMealsFavorite(meal);
-                if (wasAdded) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Remove from Favorite')));
-                } else {
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Added to Favorite')));
-                }
+            onPressed: () {
+              final wasAdded = ref
+                  .read(favoriteMealsProvider.notifier)
+                  .toggleMealsFavorite(meal);
+              if (wasAdded) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Remove from Favorite')));
+              } else {
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Added to Favorite')));
+              }
+            },
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 800),
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(
+                  scale: animation,
+                  child: child,
+                );
               },
-              icon: const Icon(Icons.favorite)),
+              child: Icon(
+                isFavorite ? Icons.star : Icons.star_border,
+                key: ValueKey(isFavorite),
+              ),
+            ),
+          ),
         ],
       ),
       body: ListView(
         children: [
-          Image.network(
-            meal.imageUrl,
-            fit: BoxFit.cover,
-            height: 300,
-            width: double.infinity,
+          Hero(
+            tag: meal.id,
+            child: Image.network(
+              meal.imageUrl,
+              fit: BoxFit.cover,
+              height: 300,
+              width: double.infinity,
+            ),
           ),
           const SizedBox(height: 15),
           Padding(

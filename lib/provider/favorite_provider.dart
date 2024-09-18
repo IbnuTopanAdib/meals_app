@@ -7,15 +7,13 @@ class FavoriteMealsNotifier extends StateNotifier<List<Meal>> {
   bool toggleMealsFavorite(Meal meal) {
     final mealIsFavorite = state.contains(meal);
     if (mealIsFavorite) {
-      state.where(
-        (m) {
-          return m.id != meal.id;
-        },
-      );
-      return true;
+      // Correctly filter and update the state
+      state = state.where((m) => m.id != meal.id).toList();
+      return true; // Returning true if it was removed
     } else {
+      // Adding the meal to favorites
       state = [...state, meal];
-      return false;
+      return false; // Returning false if it was added
     }
   }
 }
